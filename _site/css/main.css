@@ -135,7 +135,8 @@ a:visited { color: #a0a; }
 }
 
 .post ul, .post ol {
-  margin-left: 1.35em;
+  margin: 1em 1.35em;
+  
 }
 
 .post code {

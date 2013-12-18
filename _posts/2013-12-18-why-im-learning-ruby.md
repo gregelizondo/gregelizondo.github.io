@@ -23,7 +23,7 @@ My goal is to self-teach my way towards a Junior Ruby Developer position.
 This is not an exhaustive list but these are some of the resources I'll be using:
 
 * [Ruby Programming](http://pragmaticstudio.com/ruby/) video course by The Pragmatic Studio
-* [Agile Web Development with Rails 4](http://www.amazon.com/Agile-Development-Rails-Facets-Ruby/dp/1937785564/) by Sam Ruby, Dave Thomas, and David Heinemeier Hansson.
+* [Agile Web Development with Rails 4](http://www.amazon.com/Agile-Development-Rails-Facets-Ruby/dp/1937785564/) by Sam Ruby, Dave Thomas, and David Heinemeier Hansson
 * [Rails Casts](http://railscasts.com/) by Ryan Bates
 
 ##Suggestions?
