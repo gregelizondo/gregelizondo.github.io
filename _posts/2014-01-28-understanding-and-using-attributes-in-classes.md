@@ -92,7 +92,7 @@ class Character
 end
 {% endhighlight %}
 
-With this change, we can still call the `name` method on our variable `character1` just like before (By the way, the `:name` after `attr_reader` is a symbol, which I have a decent grasp on but have yet to fully understand). However, `attr_reader` only makes it so we can **read** our object's state, not alter it. If we want to be able to change a state, we'll need a new method (this is where the method with a "=" at the end of it comes in).
+With this change, we can still call the `name` method on our variable `character1` just like before (By the way, the `:name` after `attr_reader` is a symbol, which I have a decent grasp on but have yet to fully understand. I will write more about it in the future.). However, `attr_reader` only makes it so we can **read** our object's state, not **alter** it. If we want to be able to change a state, we'll need a new method (this is where the method with a "=" at the end of it comes in).
 
 {% highlight ruby %}
 class Character
@@ -111,6 +111,8 @@ class Character
 end
 {% endhighlight %}
 
+Let's see how it works in `irb`.
+
 {% highlight ruby %}
 > character1
 => #<Character:0x000001011adba8 @name="Ernie", @health=95>
@@ -123,7 +125,7 @@ end
 => #<Character:0x000001011adba8 @name="Freddy", @health=95>
 {% endhighlight %}
 
-By now, you may be able to guess that there's a better way to do this. Rather than writing a whole method, we can use the `attr_writer` attribute:
+By now, you may be able to guess that there's a better way to do this. Rather than writing a whole new method called `name=`, we can use the `attr_writer` attribute:
 
 {% highlight ruby %}
 class Character
@@ -158,7 +160,7 @@ Now we have both the ability to read and write the `name` state of our variable.
 {% highlight ruby %}
 > character1.name
 => "Freddy" 
-2.1.0 :023 > character1.name = "Jimbob"
+> character1.name = "Jimbob"
 => "Jimbob"
 {% endhighlight %}
 
