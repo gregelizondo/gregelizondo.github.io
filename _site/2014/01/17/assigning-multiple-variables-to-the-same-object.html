@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Assigning Multiple Variables to the Same Object</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Greg Elizondo</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Assigning Multiple Variables to the Same Object</h2>
+<p class="meta">17 Jan 2014</p>
+
+<div class="post">
+<p>So, the blog has been a bit quiet. But this doesn&#39;t mean that I haven&#39;t been getting some decent studying done.</p>
+
+<p>As I mentioned in my <a href="http://gregelizondo.github.io/2013/12/18/why-im-learning-ruby.html">first post</a>, this isn&#39;t the first time I&#39;ve studied Ruby (or programming in general) so I have a pretty good grasp on the basics. Nevertheless, I thought it&#39;d be best to start from the beginning. Even if that meant re-covering a lot of material. My theory is that by sticking with <a href="http://pragmaticstudio.com/ruby/">one source</a> at a time, I&#39;ll pick up on things that I might have missed by jumping from teacher-to-teacher.</p>
+
+<p>For example, in one recent video, I actually picked up some new knowledge on variable assignment.</p>
+
+<h2>Assigning Multiple Variables to One Object</h2>
+
+<p>Let&#39;s pretend we&#39;re creating a video game. Each character is identified by a certain color. Our first character is blue:</p>
+
+<div class="highlight"><pre><code class="ruby"> <span class="o">&gt;</span> <span class="n">warrior_color</span> <span class="o">=</span> <span class="s2">&quot;blue&quot;</span>
+ <span class="o">=&gt;</span> <span class="s2">&quot;blue&quot;</span>
+</code></pre></div>
+
+<p>But what happens when we assign another character to our first variable:</p>
+
+<div class="highlight"><pre><code class="ruby"> <span class="o">&gt;</span> <span class="n">archer_color</span> <span class="o">=</span> <span class="n">warrior_color</span>
+ <span class="o">=&gt;</span> <span class="s2">&quot;blue&quot;</span>
+</code></pre></div>
+
+<p>So right now, both of our characters have a color set to the string <code>&quot;blue&quot;</code>. If we call the <code>object_id</code> method on both of these variables, we&#39;ll see that they are in fact both assigned to the same object.</p>
+
+<div class="highlight"><pre><code class="ruby"> <span class="o">&gt;</span> <span class="n">warrior_color</span><span class="o">.</span><span class="n">object_id</span>
+ <span class="o">=&gt;</span> <span class="mi">2168461020</span> 
+ <span class="o">&gt;</span> <span class="n">archer_color</span><span class="o">.</span><span class="n">object_id</span>
+ <span class="o">=&gt;</span> <span class="mi">2168461020</span>
+</code></pre></div>
+
+<p>What happens if we start altering the object?</p>
+
+<div class="highlight"><pre><code class="ruby"> <span class="o">&gt;</span> <span class="c1"># let&#39;s swap out the first letter of the first variable</span>
+ <span class="o">&gt;</span> <span class="n">warrior_color</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;g&quot;</span>
+ <span class="o">=&gt;</span> <span class="s2">&quot;g&quot;</span> 
+ <span class="o">&gt;</span> <span class="n">warrior_color</span>
+ <span class="o">=&gt;</span> <span class="s2">&quot;glue&quot;</span> 
+ <span class="o">&gt;</span> <span class="n">archer_color</span>
+ <span class="o">=&gt;</span> <span class="s2">&quot;glue&quot;</span>
+ <span class="o">&gt;</span> <span class="n">warrior_color</span><span class="o">.</span><span class="n">object_id</span>
+ <span class="o">=&gt;</span> <span class="mi">2168461020</span> 
+ <span class="o">&gt;</span> <span class="n">archer_color</span><span class="o">.</span><span class="n">object_id</span>
+ <span class="o">=&gt;</span> <span class="mi">2168461020</span>
+ <span class="o">&gt;</span> <span class="c1"># the actual object changed but both variables are still assigned to it</span>
+</code></pre></div>
+
+<p>So far, all of this is pretty clear. But this this bit coming up is where I was a little surprised.</p>
+
+<div class="highlight"><pre><code class="ruby"> <span class="o">&gt;</span> <span class="n">warrior_color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span>
+ <span class="o">=&gt;</span> <span class="s2">&quot;red&quot;</span> 
+ <span class="o">&gt;</span> <span class="n">warrior_color</span><span class="o">.</span><span class="n">object_id</span>
+ <span class="o">=&gt;</span> <span class="mi">2168469920</span> 
+ <span class="o">&gt;</span> <span class="c1"># new object, new object_id. did the archer_color variable change?</span>
+ <span class="o">&gt;</span> <span class="n">archer_color</span>
+ <span class="o">=&gt;</span> <span class="s2">&quot;glue&quot;</span>
+ <span class="o">&gt;</span> <span class="n">archer_color</span><span class="o">.</span><span class="n">object_id</span>
+ <span class="o">=&gt;</span> <span class="mi">2168461020</span>
+</code></pre></div>
+
+<p>What took me by surprise was that when I re-assigned the <code>warrior_color</code> variable to <code>&quot;red&quot;</code>, I expected the <code>archer_color</code> variable to change as well (just as it had when I swapped out the &quot;b&quot; for a &quot;g&quot;). Of course, this didn&#39;t happen. When I assigned the <code>warrior_color</code> to a whole new variable, a brand new object was created. This did not affect the other variable, <code>archer_color</code>, which still maintained the same <code>object_id</code></p>
+
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Greg Elizondo<br />
+                Rubyist in Training
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/gregelizondo">github.com/gregelizondo</a><br />
+                <a href="https://twitter.com/gregelizondo">twitter.com/gregelizondo</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

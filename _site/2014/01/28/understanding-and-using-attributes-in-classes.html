@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Understanding and Using Attributes in Classes</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Greg Elizondo</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Understanding and Using Attributes in Classes</h2>
+<p class="meta">28 Jan 2014</p>
+
+<div class="post">
+<p>A little while ago when I was first trying to learn Rails, I came across a method that looked a little foreign to me. It looked something like this:</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="k">def</span> <span class="nf">title</span><span class="o">=</span><span class="p">(</span><span class="n">new_title</span><span class="p">)</span>
+    <span class="vi">@title</span> <span class="o">=</span> <span class="n">new_title</span>
+<span class="k">end</span>
+</code></pre></div>
+
+<p>At the time, I thought to myself, &quot;That&#39;s and odd way to define a method. I wonder what that equals sign is for.&quot; For the first time, I decided to give the <a href="http://rails.pockethotline.com/">Rails Hotline</a> a call.</p>
+
+<p>While I am sure the friendly operator on the other side of the line was doing his best to explain the concept to me, I just couldn&#39;t understand it. After a couple minutes, I eventually got a little embarrassed to be asking the same question over-and-over again so I just said, &quot;ah, I get it now, thanks!&quot;</p>
+
+<p>Fast forward to present day, all of my confusion about Attributes (<code>attr_reader</code>, <code>attr_writer</code>, and <code>attr_accessor</code>) has vanished.</p>
+
+<h2>Object Privacy</h2>
+
+<p>In Ruby, the default state of an object is private. Generally speaking, this is a good thing. Let&#39;s take a look at this code example to see what I&#39;m talking about:</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="k">class</span> <span class="nc">Character</span>
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="n">health</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+        <span class="vi">@name</span> <span class="o">=</span> <span class="nb">name</span>
+        <span class="vi">@health</span> <span class="o">=</span> <span class="n">health</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+
+<p>Simple enough. Let&#39;s create a new character.</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="o">&gt;</span> <span class="n">character1</span> <span class="o">=</span> <span class="no">Character</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;Ernie&quot;</span><span class="p">,</span> <span class="mi">95</span><span class="p">)</span>
+<span class="o">=&gt;</span> <span class="c1">#&lt;Character:0x000001011adba8 @name=&quot;Ernie&quot;, @health=95&gt;</span>
+</code></pre></div>
+
+<p>Cool, now if I want to see my character&#39;s name, I can just use the <code>name</code> method, right?</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="o">&gt;</span> <span class="n">character1</span><span class="o">.</span><span class="n">name</span>
+<span class="ss">NoMethodError</span><span class="p">:</span> <span class="n">undefined</span> <span class="nb">method</span> <span class="sb">`name&#39; for #&lt;Character:0x000001011adba8 @name=&quot;Ernie&quot;, @health=95&gt;</span>
+<span class="sb">   from (irb):8</span>
+</code></pre></div>
+
+<p>Oh no, what happened? Well, according to the error it looks like there is no method called <code>name</code> (yet). As I mentioned earlier, the default state of an object in Ruby is private. So if we want to be able to read the state of an object, we&#39;re going to need to create the method inside the class.</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="k">class</span> <span class="nc">Character</span>
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="n">health</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+        <span class="vi">@name</span> <span class="o">=</span> <span class="nb">name</span>
+        <span class="vi">@health</span> <span class="o">=</span> <span class="n">health</span>
+    <span class="k">end</span>
+    
+    <span class="c1"># add a name method so we can display our character&#39;s name</span>
+    <span class="k">def</span> <span class="nf">name</span>
+        <span class="vi">@name</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+
+<p>Now when we call the <code>name</code> method in irb...</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="o">&gt;</span> <span class="n">character1</span><span class="o">.</span><span class="n">name</span>
+<span class="o">=&gt;</span> <span class="s2">&quot;Ernie&quot;</span>
+</code></pre></div>
+
+<p>Sweet, it works! No more NoMethodError. We&#39;ve overridden the default privacy state of our object.</p>
+
+<h2>attr<em>reader, attr</em>writer, and attr_accessor</h2>
+
+<p>The above process definitely works. But, the code is a little cumbersome. It also seems like we shouldn&#39;t have to explicitly write something out like this if it&#39;s going to come up so often. Luckily, Ruby makes this process even easier.</p>
+
+<p>If we&#39;re just trying to provide our object with the ability to be read, the <code>attr_reader</code> attribute will do the trick. It looks like this:</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="k">class</span> <span class="nc">Character</span>
+    <span class="c1"># make the name state readable</span>
+    <span class="kp">attr_reader</span> <span class="ss">:name</span>
+    
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="n">health</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+        <span class="vi">@name</span> <span class="o">=</span> <span class="nb">name</span>
+        <span class="vi">@health</span> <span class="o">=</span> <span class="n">health</span>
+    <span class="k">end</span>
+    
+    <span class="c1"># this method is no longer necessary thanks to attr_accessor</span>
+    <span class="c1">#def name</span>
+    <span class="c1">#  @name</span>
+    <span class="c1">#end</span>
+<span class="k">end</span>
+</code></pre></div>
+
+<p>With this change, we can still call the <code>name</code> method on our variable <code>character1</code> just like before (By the way, the <code>:name</code> after <code>attr_reader</code> is a symbol, which I have a decent grasp on but have yet to fully understand. I will write more about it in the future.). However, <code>attr_reader</code> only makes it so we can <strong>read</strong> our object&#39;s state, not <strong>alter</strong> it. If we want to be able to change a state, we&#39;ll need a new method (this is where the method with a &quot;=&quot; at the end of it comes in).</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="k">class</span> <span class="nc">Character</span>
+    <span class="c1"># make the name state readable</span>
+    <span class="kp">attr_reader</span> <span class="ss">:name</span>
+    
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="n">health</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+        <span class="vi">@name</span> <span class="o">=</span> <span class="nb">name</span>
+        <span class="vi">@health</span> <span class="o">=</span> <span class="n">health</span>
+    <span class="k">end</span>
+    
+    <span class="c1"># this method allows us to change an object&#39;s state</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="o">=</span><span class="p">(</span><span class="n">new_name</span><span class="p">)</span>
+        <span class="vi">@name</span> <span class="o">=</span> <span class="n">new_name</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+
+<p>Let&#39;s see how it works in <code>irb</code>.</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="o">&gt;</span> <span class="n">character1</span>
+<span class="o">=&gt;</span> <span class="c1">#&lt;Character:0x000001011adba8 @name=&quot;Ernie&quot;, @health=95&gt;</span>
+
+<span class="c1"># now let&#39;s change our character&#39;s name</span>
+
+<span class="o">&gt;</span> <span class="n">character1</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Freddy&quot;</span>
+<span class="o">=&gt;</span> <span class="s2">&quot;Freddy&quot;</span> 
+<span class="o">&gt;</span> <span class="n">character1</span>
+<span class="o">=&gt;</span> <span class="c1">#&lt;Character:0x000001011adba8 @name=&quot;Freddy&quot;, @health=95&gt;</span>
+</code></pre></div>
+
+<p>By now, you may be able to guess that there&#39;s a better way to do this. Rather than writing a whole new method called <code>name=</code>, we can use the <code>attr_writer</code> attribute:</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="k">class</span> <span class="nc">Character</span>
+    <span class="c1"># make the name state readable</span>
+    <span class="kp">attr_reader</span> <span class="ss">:name</span>
+    <span class="c1"># make the name state writable</span>
+    <span class="kp">attr_writer</span> <span class="ss">:name</span>
+    
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="n">health</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+        <span class="vi">@name</span> <span class="o">=</span> <span class="nb">name</span>
+        <span class="vi">@health</span> <span class="o">=</span> <span class="n">health</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+
+<p>Great, now our <code>name</code> state for the <code>Charater</code> class is both readable and writable. We can improve our code one step further by using the <code>attr_accessor</code> attribute which gives both reading and writing permissions.</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="k">class</span> <span class="nc">Character</span>
+    <span class="c1"># make the name state readable and writable</span>
+    <span class="kp">attr_accessor</span> <span class="ss">:name</span>
+    
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="nb">name</span><span class="p">,</span> <span class="n">health</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+        <span class="vi">@name</span> <span class="o">=</span> <span class="nb">name</span>
+        <span class="vi">@health</span> <span class="o">=</span> <span class="n">health</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+
+<p>Now we have both the ability to read and write the <code>name</code> state of our variable.:</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="o">&gt;</span> <span class="n">character1</span><span class="o">.</span><span class="n">name</span>
+<span class="o">=&gt;</span> <span class="s2">&quot;Freddy&quot;</span> 
+<span class="o">&gt;</span> <span class="n">character1</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Jimbob&quot;</span>
+<span class="o">=&gt;</span> <span class="s2">&quot;Jimbob&quot;</span>
+</code></pre></div>
+
+<p>I hope this helps somebody else who has been struggling with attributes in Ruby. Hopefully it will save you an embarrassing phone call!</p>
+
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Greg Elizondo<br />
+                Rubyist in Training
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/gregelizondo">github.com/gregelizondo</a><br />
+                <a href="https://twitter.com/gregelizondo">twitter.com/gregelizondo</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>
