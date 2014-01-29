@@ -69,7 +69,7 @@ Now when we call the `name` method in irb...
 
 Sweet, it works! No more NoMethodError. We've overridden the default privacy state of our object.
 
-##attr_reader, attr_writer, and attr_accessor
+##`attr_reader`, `attr_writer`, and `attr_accessor`
 
 The above process definitely works. But, the code is a little cumbersome. It also seems like we shouldn't have to explicitly write something out like this if it's going to come up so often. Luckily, Ruby makes this process even easier.
 
@@ -165,26 +165,3 @@ Now we have both the ability to read and write the `name` state of our variable.
 {% endhighlight %}
 
 I hope this helps somebody else who has been struggling with attributes in Ruby. Hopefully it will save you an embarrassing phone call!
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
