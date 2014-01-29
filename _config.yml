@@ -1,3 +1,10 @@
 name: Greg Elizondo
 markdown: redcarpet
 pygments: true
+gitub: www.github.com/gregelizondo
+about: I am a Rubyist in training.
+urls:
+    - text: github
+      url: https://github.com/gregelizondo
+    - text: twitter
+      url: https://twitter.com/gregelizondo
