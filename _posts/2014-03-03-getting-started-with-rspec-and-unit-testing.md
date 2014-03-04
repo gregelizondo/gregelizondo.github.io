@@ -23,13 +23,13 @@ Of course, now we need something to test. Why don't we use a version of our Char
 class Character
 
 	def initialize(name, health=100)
-		@name = name.capitalize
-		@health = health
+	  @name = name.capitalize
+	  @health = health
 	end
 	
 	def name
 	  name = @name
-  end
+	end
 	
 	def power_up
 	  @health += 10
@@ -53,6 +53,7 @@ So, we have a simple character Class. It allows us to create a new character, di
 Since the Class and `.rb` file we're working is called `character`, RSpec convention says we should name our test file, `character_spec.rb`. RSpec has its own DSL but it's all actually highly readable Ruby code. Let's get started by writing our first test!
 
 {% highlight ruby %}
+# character_spec.rb_
 require_relative 'character'
 
 describe Character do
