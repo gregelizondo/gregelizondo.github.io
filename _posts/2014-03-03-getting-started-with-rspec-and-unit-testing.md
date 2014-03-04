@@ -60,7 +60,7 @@ describe Character do
   it "has a capitalized name" do
     character = Character.new("greg")
     
-    character.name.should == "Greg"
+    expect(character.name).to eq "Greg"
   end
   
 end
@@ -80,7 +80,7 @@ Going back to our spec, let's alter the expectation.
   it "has a capitalized name" do
     character = Character.new("greg")
     
-    character.name.should == "greg" # this should fail
+    expect(character.name).to eq "greg" # this should fail
   end
 {% endhighlight %}
 
@@ -98,25 +98,25 @@ describe Character do
   it "has a capitalized name" do
     character = Character.new("greg")
     
-    character.name.should == "Greg"
+    expect(character.name).to eq "Greg"
   end
   
   it "can power_up" do
     character = Character.new("greg")
     
-    character.power_up.should == 110
+    expect(character.power_up).to eq 110
   end
   
   it "can power_down" do
     character = Character.new("greg")
     
-    character.power_down.should == 90
+    expect(character.power_down).to eq 90
   end
   
   it "displays full character info" do
     character = Character.new("greg")
     
-    character.character_info.should == "Greg has a health of 100"
+    expect(character.character_info).to eq "Greg has a health of 100"
   end
   
 end
@@ -140,19 +140,19 @@ describe Character do
   end
   
   it "has a capitalized name" do
-    @character.name.should == "Greg"
+    expect(@character.name).to eq "Greg"
   end
   
   it "can power_up" do
-    @character.power_up.should == 110
+    expect(@character.power_up).to eq 110
   end
   
   it "can power_down" do
-    @character.power_down.should == 90
+    expect(@character.power_down).to eq 90
   end
   
   it "displays full character info" do 
-    @character.character_info.should == "Greg has a health of 100"
+    expect(@character.character_info).to eq "Greg has a health of 100"
   end
   
 end
@@ -167,5 +167,7 @@ If we run our test again we'll once again see that all tests are passing.
 The great thing about testing is that it gives you the freedom to hack on other parts of your application with a sense of confidence. Without proper testing, you could inadvertently "break" a different part of your application without realizing your mistake. By the time you notice things aren't working right, it may be too late. A proper test suite will alert you to the problem sooner and let you know which specific parts of your app aren't working.
 
 Hope this helps demystify some of the confusion around testing. Remember, this was just a brief intro and there's plenty of great reading about the TDD methodology. [Find me on Twitter](https://twitter.com/gregelizondo) if you have any questions. Thanks!
+
+*Edit: [Redditor totallymike pointed out](http://www.reddit.com/r/ruby/comments/1zj91w/getting_started_with_rspec_and_unit_testing/) that I originally used deprecated syntax for some of my RSpec code. Specifically, something like* `expect(character.name).to eq "Greg"` *originally read*, `character.name.should == "Greg"`. *If you'd like to read more about syntax changes in RSpec3, you can [do so here](http://myronmars.to/n/dev-blog/2013/07/the-plan-for-rspec-3). Thanks for the tip, totallymike!*
 
 
