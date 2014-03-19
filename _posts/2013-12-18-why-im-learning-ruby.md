@@ -16,7 +16,7 @@ I'm pretty happy with what I do now (I work in Marketing for a small creative fi
 
 I love the web. I love the power it has to connect and automate.
 
-My goal is to self-teach my way towards a Junior Ruby Developer position.
+My goal is to self-teach my way to the status of Competent Rails Developer.
 
 ##Materials
 
