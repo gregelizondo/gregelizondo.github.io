@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title> Using Modules </title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+        
+        <!-- Google Analytics -->
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-49235845-1', 'gregelizondo.github.io');
+          ga('send', 'pageview');
+
+        </script>
+
+    </head>
+    <body>
+
+		<div id="container">
+
+			<div class="left">
+			  <a href="/">
+				<h1>Greg Elizondo</h1>
+				<img id="about" src="/img/logo.jpg" height="75px" width="75px" /><br />	
+        </a>
+        
+				<strong>navigation</strong><br />
+				<a href="/">home</a> <br />
+				
+					<a class="about" href="https://github.com/gregelizondo">github</a><br />
+				
+					<a class="about" href="https://twitter.com/gregelizondo">twitter</a><br />
+				
+				
+				
+				<div id="about">
+					<strong>about</strong><br />
+					MBA, marketer, Rubyist in training
+				</div>
+				
+			</div>
+
+			<div class="right">
+				
+				<h1>Using Modules</h1>
+<span class="time">21 Mar 2014</span>
+
+<div class="content">
+	<div class="post"><p>Modules are an important part of the Ruby programming world. They offer multiple benefits such as the ability to:</p>
+
+<ul>
+<li>&quot;mix-in&quot; methods across multiple classes</li>
+<li>DRY out your code</li>
+<li>bundle logically related objects together</li>
+</ul>
+
+<h2>What code would look like without modules</h2>
+
+<p>Take a look at this sample code and notice what&#39;s wrong with it:</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="c1">#car.rb</span>
+<span class="k">class</span> <span class="nc">Car</span>
+  <span class="k">def</span> <span class="nf">horn</span>
+    <span class="nb">puts</span> <span class="s2">&quot;beep beep!&quot;</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="c1">#truck.rb</span>
+<span class="k">class</span> <span class="nc">Truck</span>
+  <span class="k">def</span> <span class="nf">horn</span>
+    <span class="nb">puts</span> <span class="s2">&quot;beep beep!&quot;</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+
+<p>A couple things look a little funky here. We have 2 different classes present and they both define a method called <code>horn</code>.</p>
+
+<p>First off, this code isn&#39;t DRY. We define the same method in 2 different classes that serve the same exact function. Second, the <code>horn</code> method isn&#39;t exclusive to the <code>Car</code> or <code>Truck</code> classes. They can make use of this method, but so could a lot of other objects. Who knows, further down the line we may be creating <code>Van</code> and <code>Bus</code> classes that also need a <code>horn</code> method. It wouldn&#39;t make sense to re-define it for all of them too.</p>
+
+<p>And this, is where modules come in handy.</p>
+
+<h2>A &quot;bucket&quot; for methods</h2>
+
+<p>One way of describing modules that really helped me was thinking of them as &quot;buckets&quot; for methods. They&#39;re similar to classes in this way, but unlike classes they can&#39;t be instantiated.</p>
+
+<p>So, let&#39;s create a new module and <code>include</code> it in our 2 classes.</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="c1">#car.rb</span>
+<span class="k">class</span> <span class="nc">Car</span>
+  <span class="kp">include</span> <span class="no">AutomobileSounds</span>
+<span class="k">end</span>
+
+<span class="c1">#truck.rb</span>
+<span class="k">class</span> <span class="nc">Truck</span>
+  <span class="kp">include</span> <span class="no">AutomobileSounds</span>
+<span class="k">end</span>
+
+<span class="c1">#automobile_sounds.rb</span>
+<span class="k">module</span> <span class="nn">AutomobileSounds</span>
+  <span class="k">def</span> <span class="nf">horn</span>
+    <span class="nb">puts</span> <span class="s2">&quot;beep beep!&quot;</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+
+<p>We can hop into irb and test out the functionality:</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="o">&gt;</span> <span class="nb">load</span> <span class="s1">&#39;automobile_sounds.rb&#39;</span>
+<span class="o">=&gt;</span> <span class="kp">true</span>
+<span class="o">&gt;</span> <span class="nb">load</span> <span class="s1">&#39;car.rb&#39;</span>
+<span class="o">=&gt;</span> <span class="kp">true</span>
+<span class="o">&gt;</span> <span class="no">Car</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">horn</span>
+<span class="o">=&gt;</span> <span class="n">beep</span> <span class="n">beep!</span>
+</code></pre></div>
+
+<p>Pretty sweet. Our new module can now be accessed by both of our other classes. We&#39;ve DRY&#39;ed up our code, made it more elegant, and made it easier to use as our application grows.</p>
+
+<p>As I mentioned earlier, unlike classes, modules can&#39;t be instantiated so <code>AutomobileSounds.new</code> will give us an &quot;undefined method&quot; error. This module is merely a &quot;bucket&quot; for methods.</p>
+
+<p>It&#39;s also important to note that using the <code>include</code> method gives us access to a module as an instance method. For example, we used <code>include AutomobileSounds</code> in the <code>Truck</code> class so we can now call <code>Truck.new.horn</code>. We cannot, however, call <code>Truck.horn</code>, which would be a class method. If we wanted to be able to call a class method, we would have to <code>extend</code> the module, rather than <code>include</code> it. Make sense?</p>
+
+<h2>Closing</h2>
+
+<p>As always, please let me know if anything doesn&#39;t make sense or if you notice anything that needs fixing. You can reach me quickly <a href="https://twitter.com/gregelizondo">@gregelizondo</a>. I&#39;m always open to hearing feedback. Thanks!</p>
+
+<p><em>If you prefer a video explanation of this concept, be sure to check out <a href="https://twitter.com/schneems">Richard Schneeman&#39;s</a> great video on YouTube: <a href="https://www.youtube.com/watch?v=taaIIYj1jFA">Using Modules in Ruby</a>. This post is basically a written version of his lesson.</em></p>
+</div>
+</div>
+
+				
+				<footer>
+					&copy; Greg Elizondo
+				</footer>
+			</div>
+		
+		</div>
+
+    </body>
+</html>

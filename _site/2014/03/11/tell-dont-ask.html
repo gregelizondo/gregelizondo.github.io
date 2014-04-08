@@ -11,6 +11,18 @@
 
         <!-- Custom CSS -->
         <link rel="stylesheet" href="/css/main.css">
+        
+        <!-- Google Analytics -->
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-49235845-1', 'gregelizondo.github.io');
+          ga('send', 'pageview');
+
+        </script>
 
     </head>
     <body>
@@ -18,9 +30,11 @@
 		<div id="container">
 
 			<div class="left">
+			  <a href="/">
 				<h1>Greg Elizondo</h1>
 				<img id="about" src="/img/logo.jpg" height="75px" width="75px" /><br />	
-
+        </a>
+        
 				<strong>navigation</strong><br />
 				<a href="/">home</a> <br />
 				
@@ -32,7 +46,7 @@
 				
 				<div id="about">
 					<strong>about</strong><br />
-					Rubyist in training.
+					MBA, marketer, Rubyist in training
 				</div>
 				
 			</div>
@@ -78,7 +92,8 @@
 
 <p>If we wanted to determine whether or not a <code>Character</code> is healthy, we may think about writing some code like this:</p>
 
-<div class="highlight"><pre><code class="ruby"><span class="n">character1</span> <span class="o">=</span> <span class="no">Character</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;Joe&quot;</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
+<div class="highlight"><pre><code class="ruby"><span class="c1"># character_health.rb</span>
+<span class="n">character1</span> <span class="o">=</span> <span class="no">Character</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;Joe&quot;</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
 
 <span class="k">if</span> <span class="n">character1</span><span class="o">.</span><span class="n">health</span> <span class="o">&gt;=</span> <span class="mi">85</span>
   <span class="nb">puts</span> <span class="s2">&quot;Healthy&quot;</span>
@@ -103,7 +118,7 @@
   <span class="k">end</span>
 </code></pre></div>
 
-<p>Now, we&#39;re telling any instances of the <code>Character</code> class, &quot;you are healthy if your health is greater than or equal to 85.&quot;</p>
+<p>Now we&#39;re telling any instances of the <code>Character</code> class, &quot;you are healthy if your health is greater than or equal to 85.&quot;</p>
 
 <p>If we still wanted to output a string saying whether or not a character is &quot;healthy&quot; or &quot;unhealthy&quot;, we could simply add a new <code>status</code> method.</p>
 
@@ -121,14 +136,13 @@
   <span class="k">end</span>
 </code></pre></div>
 
-<p>There, nice and clean one-line methods!</p>
+<p>There, nice and clean one-line methods! Hope this help some other new Rubyist out there.</p>
 </div>
 </div>
 
 				
 				<footer>
 					&copy; Greg Elizondo
-					
 				</footer>
 			</div>
 		

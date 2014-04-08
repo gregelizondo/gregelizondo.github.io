@@ -5,7 +5,7 @@
  */
 body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     color: #424242;
 }
 
@@ -24,6 +24,7 @@ h1 {
     font-weight: normal;
     color: #696969;
     margin-bottom: 10px;
+    font-size: 22px;
 }
 
 h2 {
@@ -136,7 +137,7 @@ div.left {
         margin-right: 40px;
         margin-top: 100px;
         float: left;
-        font-size: 11px;
+        font-size: 14px;
         color: #666;
 }
 
