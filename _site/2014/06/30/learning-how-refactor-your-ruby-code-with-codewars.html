@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title> Learning How to Refactor Your Ruby Code with Codewars </title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+        
+        <!-- Google Analytics -->
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-49235845-1', 'gregelizondo.github.io');
+          ga('send', 'pageview');
+
+        </script>
+
+    </head>
+    <body>
+
+		<div id="container">
+
+			<div class="left">
+			  <a href="/">
+				<h1>Greg Elizondo</h1>
+				<img id="about" src="/img/logo.jpg" height="75px" width="75px" /><br />	
+        </a>
+        
+				<strong>navigation</strong><br />
+				<a href="/">home</a> <br />
+				
+					<a class="about" href="https://github.com/gregelizondo">github</a><br />
+				
+					<a class="about" href="https://twitter.com/gregelizondo">twitter</a><br />
+				
+				
+				
+				<div id="about">
+					<strong>about</strong><br />
+					MBA, marketer, Rubyist in training
+				</div>
+				
+			</div>
+
+			<div class="right">
+				
+				<h1>Learning How to Refactor Your Ruby Code with Codewars</h1>
+<span class="time">30 Jun 2014</span>
+
+<div class="content">
+	<div class="post"><p>If you&#39;ve ever poked around online for in-browser coding playgrounds, you know that there&#39;s no shortage of fun ways to practice your coding skills. But if you&#39;re like me, you&#39;ve probably also found a lot of them to be somewhat limiting.</p>
+
+<p>For example, I absolutely loved running through <a href="http://rubykoans.com/">Ruby Koans</a> and <a href="https://rubymonk.com/">Ruby Monk</a>, but both of them left me wanting more (by the way, if you&#39;re new to Ruby, be sure to check out both of those sites). I certainly learned a lot, but it never felt like I was solving &quot;real&quot; coding problems. I wanted something a little more &quot;real world.&quot;</p>
+
+<p>Enter: <a href="http://www.codewars.com/">Codewars</a>.</p>
+
+<h2>Solving and learning</h2>
+
+<p>For those of you that are unfamiliar with Codewars, let me tell you a little bit about how it works.</p>
+
+<p>It&#39;s a gamified take on programming challenges. Users are able to choose their language(s) of study and then take on individual coding challenges called Katas. As harder and harder Katas are solved, the user can level up his/her rank (referred to as Kyu).</p>
+
+<p>What makes Codewars so enjoyable is the community aspect. Once you successfully solve a Kata, you&#39;re shown the solutions of other Codewars members. Which—for a newbie programmer—can be a humbling and educational experience.</p>
+
+<p>When I first started practicing on Codewars, this was a common scenario: I&#39;d rack my brain for 20-30 minutes on a difficult problem. Finally, I&#39;d finish the exercise and submit my final answer. My joy would quickly turn to disappointment as I reviewed the top solutions submitted by other members. What took me 8-10 lines of code, others were doing in 1!</p>
+
+<p>But this is why Codewars is such an awesome tool for newer programmers. After seeing how other (better) programmers solved some of the challenges, some of their methods started working their way into my thought process.</p>
+
+<h2>Learning how to refactor</h2>
+
+<p>Here&#39;s an example Kata:</p>
+
+<div class="highlight"><pre><code class="text">Complete the solution so that it takes the hash and 
+generates a human readable string from its key/value pairs.
+
+The format should be &quot;KEY = VALUE&quot;.
+Each key/value pair should be separated by a comma 
+except for the last pair.
+
+Example:
+solution({a: 1, b: &#39;2&#39;}) # should return &quot;a = 1,b = 2&quot;
+</code></pre></div>
+
+<p>And here&#39;s what my original solution to this exercise was:</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="k">def</span> <span class="nf">solution</span><span class="p">(</span><span class="n">pairs</span><span class="p">)</span>
+  <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+  <span class="n">pairs</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="o">|</span>
+    <span class="n">string</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">k</span><span class="si">}</span><span class="s2"> = </span><span class="si">#{</span><span class="n">v</span><span class="si">}</span><span class="s2">,&quot;</span>
+  <span class="k">end</span>
+  <span class="n">string</span><span class="o">.</span><span class="n">chomp</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre></div>
+
+<p>Well, it works. But it certainly isn&#39;t the prettiest code. Once I submit my final answer, I get to see how other Codewars members solved the problem and can even sort by <em>Best Practices</em>. Here&#39;s what the top solution looks like:</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="k">def</span> <span class="nf">solution</span><span class="p">(</span><span class="n">pairs</span><span class="p">)</span>
+  <span class="n">pairs</span><span class="o">.</span><span class="n">map</span><span class="p">{</span><span class="o">|</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="o">|</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">k</span><span class="si">}</span><span class="s2"> = </span><span class="si">#{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre></div>
+
+<p>Ah, much more elegant.</p>
+
+<p>Usually the <em>Best Practice</em> solution makes sense to me. I study them and try and commit them to memory. Occasionally, I&#39;ll need to dig into <a href="http://ruby-doc.org/">ruby-doc.org</a> or do a little Googling to make sense of the more complicated solutions. Regardless, it&#39;s a great way of learning how more advanced programmers think.</p>
+</div>
+	<div id="disqus_thread"></div>
+  <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+      var disqus_shortname = 'gregelizondogithub'; // required: replace example with your forum shortname
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+				
+				<footer>
+					&copy; 2014 Greg Elizondo
+				</footer>
+			</div>
+		
+		</div>
+
+    </body>
+</html>
