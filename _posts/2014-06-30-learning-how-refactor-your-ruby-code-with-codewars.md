@@ -7,7 +7,7 @@ If you've ever poked around online for in-browser coding playgrounds, you know t
 
 For example, I absolutely loved running through [Ruby Koans](http://rubykoans.com/) and [Ruby Monk](https://rubymonk.com/), but both of them left me wanting more (by the way, if you're new to Ruby, be sure to check out both of those sites). I certainly learned a lot, but it never felt like I was solving "real" coding problems. I wanted something a little more "real world."
 
-Enter: [Codewars](http://www.codewars.com/).
+Enter: [Codewars](http://www.codewars.com/r/BWz9Tw).
 
 ##Solving and learning
 
@@ -61,4 +61,4 @@ Ah, much more elegant.
 
 Usually the *Best Practice* solution makes sense to me. I study them and try and commit them to memory. Occasionally, I'll need to dig into [ruby-doc.org](http://ruby-doc.org/) or do a little Googling to make sense of the more complicated solutions. Regardless, it's a great way of learning how more advanced programmers think.
 
-If you haven't already, be sure to give [Codewars](http://www.codewars.com/) a try.
+If you haven't already, be sure to give [Codewars](http://www.codewars.com/r/BWz9Tw) a try.
